@@ -109,6 +109,8 @@ class SizingResult(BaseModel):
     stopped_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     total_messages: int
     total_bytes: int
+    dropped_events: int = Field(default=0, ge=0)
+    dropped_ratio: float = Field(default=0.0, ge=0.0, le=1.0)
     per_severity: Dict[str, int]
     per_hostname: Dict[str, int]
     per_app_name: Dict[str, int]
@@ -128,6 +130,7 @@ class SyslogSizingState:
     stopped_at: Optional[datetime] = None
     total_messages: int = 0
     total_bytes: int = 0
+    dropped_events: int = 0
     per_severity: Dict[str, int] = field(default_factory=dict)
     per_hostname: Dict[str, int] = field(default_factory=dict)
     per_app_name: Dict[str, int] = field(default_factory=dict)

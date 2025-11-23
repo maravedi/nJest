@@ -5,7 +5,7 @@ from asyncio import Queue, QueueFull
 from datetime import datetime, timezone
 from typing import Any, Dict, Tuple
 
-from ..types.models import SizingResult, SyslogSizingConfig
+from ..types.models import SizingResult, SyslogSizingConfig, SyslogSizingState
 from ..utils.accumulator import initialize_state, record_event
 from ..utils.analysis import finalize_state
 from ..utils.logging_helpers import get_json_logger
@@ -15,9 +15,15 @@ logger = get_json_logger("syslog_sizing_tool.capture")
 
 
 class SyslogDatagramProtocol(asyncio.DatagramProtocol):
-    def __init__(self, queue: Queue[Tuple[bytes, str]], max_payload: int) -> None:
+    def __init__(
+        self,
+        queue: Queue[Tuple[bytes, str]],
+        max_payload: int,
+        state: SyslogSizingState,
+    ) -> None:
         self.queue = queue
         self.max_payload = max_payload
+        self.state = state
 
     def datagram_received(self, data: bytes, addr: Tuple[str, int]) -> None:
         if not data:
@@ -32,6 +38,7 @@ class SyslogDatagramProtocol(asyncio.DatagramProtocol):
                 "ingest_queue_full",
                 extra={"module": "syslog_capture", "function": "datagram_received"},
             )
+            self.state.dropped_events += 1
 
 
 async def _handle_tcp_client(
@@ -41,6 +48,7 @@ async def _handle_tcp_client(
     max_payload: int,
     inactivity_grace: int,
     client_gate: asyncio.Semaphore,
+    state: SyslogSizingState,
 ) -> None:
     async with client_gate:
         peer_info = writer.get_extra_info("peername")
@@ -69,6 +77,7 @@ async def _handle_tcp_client(
                             "function": "handle_tcp_client",
                         },
                     )
+                    state.dropped_events += 1
         finally:
             writer.close()
             await writer.wait_closed()
@@ -84,7 +93,7 @@ async def run_capture_session(request: Dict[str, Any]) -> Dict[str, Any]:
     client_gate = asyncio.Semaphore(config.max_tcp_clients)
 
     udp_transport, _ = await loop.create_datagram_endpoint(
-        lambda: SyslogDatagramProtocol(queue, max_payload=8192),
+        lambda: SyslogDatagramProtocol(queue, max_payload=8192, state=state),
         local_addr=(str(config.listen_host), config.udp_port),
     )
 
@@ -96,6 +105,7 @@ async def run_capture_session(request: Dict[str, Any]) -> Dict[str, Any]:
             max_payload=8192,
             inactivity_grace=config.inactivity_grace_seconds,
             client_gate=client_gate,
+            state=state,
         ),
         host=str(config.listen_host),
         port=config.tcp_port,
