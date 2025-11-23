@@ -1,0 +1,26 @@
+# Generated via `flog -f syslog -n 25 -w`
+<38>1 2025-11-22T16:32:01Z edge-router-01 firewalld 4124 ID47 [meta sequence="1" category="net"] denied tcp src=10.44.1.15 dst=203.0.113.5 sport=51234 dport=443 proto=tcp
+<46>1 2025-11-22T16:32:02Z edge-router-01 sshd 9012 ID13 [meta sequence="2" category="auth"] Failed password for admin from 203.0.113.45 port 53422 ssh2
+<21>1 2025-11-22T16:32:03Z core-switch-02 lldpd 1221 ID99 [meta sequence="3" category="net"] neighbor update port=Ethernet1/7 chassis=00:16:3e:7e:25:01
+<30>1 2025-11-22T16:32:04Z core-switch-02 snmpd 2234 ID55 [meta sequence="4" category="snmp"] trap coldStart agent=core-switch-02
+<14>1 2025-11-22T16:32:05Z edge-router-01 dhcpd 8899 ID22 [meta sequence="5" category="svc"] assigned lease 10.44.8.23 to 00:25:96:ff:fe:12:31:77
+<34>1 2025-11-22T16:32:06Z app-gateway-03 envoy 3321 ID77 [meta sequence="6" category="http"] upstream_request_timeout route=authsvc duration_ms=1520
+<12>1 2025-11-22T16:32:07Z app-gateway-03 envoy 3321 ID78 [meta sequence="7" category="http"] upstream_ok route=authsvc duration_ms=43
+<15>1 2025-11-22T16:32:08Z payment-worker-02 scheduler 2122 ID12 [meta sequence="8" category="batch"] job completed name=payout-settle latency_ms=341
+<11>1 2025-11-22T16:32:09Z payment-worker-02 scheduler 2122 ID12 [meta sequence="9" category="batch"] job completed name=payout-settle latency_ms=182
+<42>1 2025-11-22T16:32:10Z edge-router-01 firewalld 4124 ID47 [meta sequence="10" category="net"] denied udp src=10.44.3.52 dst=198.51.100.22 sport=40212 dport=161 proto=udp
+<18>1 2025-11-22T16:32:11Z core-switch-02 ntpd 5644 ID04 [meta sequence="11" category="svc"] synchronized to 169.254.169.123 offset_ms=0.3
+<26>1 2025-11-22T16:32:12Z ingest-cache-01 varnish 6651 ID99 [meta sequence="12" category="cache"] hit rate=0.96 backend=origin-a
+<31>1 2025-11-22T16:32:13Z ingest-cache-01 varnish 6651 ID99 [meta sequence="13" category="cache"] miss rate=0.04 backend=origin-b
+<20>1 2025-11-22T16:32:14Z ingest-cache-01 varnish 6651 ID99 [meta sequence="14" category="cache"] ban completed matcher="req.url ~ /beta"
+<13>1 2025-11-22T16:32:15Z app-gateway-03 envoy 3321 ID79 [meta sequence="15" category="http"] circuit_breaking active_connections=120 limit=200
+<17>1 2025-11-22T16:32:16Z payment-worker-02 scheduler 2122 ID13 [meta sequence="16" category="batch"] job delayed name=ledger-rollup delay_ms=980
+<24>1 2025-11-22T16:32:17Z payment-worker-02 scheduler 2122 ID13 [meta sequence="17" category="batch"] job retry triggered name=ledger-rollup attempt=2
+<33>1 2025-11-22T16:32:18Z edge-router-01 firewalld 4124 ID47 [meta sequence="18" category="net"] denied tcp src=10.44.6.15 dst=192.0.2.15 sport=55122 dport=25 proto=tcp
+<10>1 2025-11-22T16:32:19Z ingest-cache-01 varnish 6651 ID99 [meta sequence="19" category="cache"] backend_healthy backend=origin-b
+<43>1 2025-11-22T16:32:20Z auth-api-01 uwsgi 7788 ID88 [meta sequence="20" category="app"] 500 Internal Server Error path=/v2/login latency_ms=903
+<16>1 2025-11-22T16:32:21Z auth-api-01 uwsgi 7788 ID88 [meta sequence="21" category="app"] 200 OK path=/v2/login latency_ms=35
+<39>1 2025-11-22T16:32:22Z edge-router-01 firewalld 4124 ID47 [meta sequence="22" category="net"] denied udp src=10.44.12.9 dst=203.0.113.50 sport=55231 dport=53 proto=udp
+<32>1 2025-11-22T16:32:23Z auth-api-01 uwsgi 7788 ID88 [meta sequence="23" category="app"] 401 Unauthorized path=/v2/token latency_ms=81
+<19>1 2025-11-22T16:32:24Z auth-api-01 uwsgi 7788 ID88 [meta sequence="24" category="app"] audit trail user=svc-collector action=token_issue
+<37>1 2025-11-22T16:32:25Z ingest-cache-01 varnish 6651 ID99 [meta sequence="25" category="cache"] backend unhealthy backend=origin-c reason=timeout
