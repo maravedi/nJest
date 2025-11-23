@@ -27,6 +27,10 @@ def finalize_state(
 
     avg_eps = state.total_messages / measurement_seconds
     avg_bps = state.total_bytes / measurement_seconds
+    total_attempted = state.total_messages + state.dropped_events
+    dropped_ratio = (
+        state.dropped_events / total_attempted if total_attempted else 0.0
+    )
 
     percentile_data = PercentileBreakdown(
         **percentile_breakdown(state.stored_sizes or [0])
@@ -65,13 +69,20 @@ def finalize_state(
         talkers=talkers[:12],
     )
 
-    insights = _build_insights(state=state, config=config, estimates=estimates)
+    insights = _build_insights(
+        state=state,
+        config=config,
+        estimates=estimates,
+        dropped_ratio=dropped_ratio,
+    )
 
     return SizingResult(
         started_at=state.started_at,
         stopped_at=state.stopped_at,
         total_messages=state.total_messages,
         total_bytes=state.total_bytes,
+        dropped_events=state.dropped_events,
+        dropped_ratio=round(dropped_ratio, 4),
         per_severity=state.per_severity,
         per_hostname=state.per_hostname,
         per_app_name=state.per_app_name,
@@ -81,9 +92,25 @@ def finalize_state(
 
 
 def _build_insights(
-    *, state: SyslogSizingState, config: SyslogSizingConfig, estimates: IngestEstimates
+    *,
+    state: SyslogSizingState,
+    config: SyslogSizingConfig,
+    estimates: IngestEstimates,
+    dropped_ratio: float,
 ) -> List[Insight]:
     items: List[Insight] = []
+    if dropped_ratio > 0.0:
+        items.append(
+            Insight(
+                title="Potential sampling bias",
+                detail=(
+                    f"{state.dropped_events:,} events ({dropped_ratio:.2%}) were dropped "
+                    "because the ingest queue was saturated; percentile and talker estimates "
+                    "may under-report true volumes."
+                ),
+                confidence=0.92 if dropped_ratio >= 0.05 else 0.75,
+            )
+        )
     high_value_ratio = (
         state.high_value_events / state.total_messages if state.total_messages else 0.0
     )

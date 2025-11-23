@@ -15,6 +15,10 @@ def render_console_report(result: Dict[str, Any]) -> None:
     summary.add_row("Stopped", _fmt_ts(result.get("stopped_at")))
     summary.add_row("Total Messages", f"{result.get('total_messages', 0):,}")
     summary.add_row("Total Bytes", f"{result.get('total_bytes', 0):,}")
+    summary.add_row(
+        "Dropped Events",
+        f"{result.get('dropped_events', 0):,} ({result.get('dropped_ratio', 0.0):.2%})",
+    )
 
     estimates = result.get("estimates", {})
     rates = estimates.get("rates", {})
