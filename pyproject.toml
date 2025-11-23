@@ -1,0 +1,28 @@
+ [build-system]
+ requires = ["hatchling>=1.18.0"]
+ build-backend = "hatchling.build"
+
+ [project]
+ name = "syslog-sizing-tool"
+ version = "0.1.0"
+ description = "Cross-platform syslog ingest sizing utility with analytics and optimization guidance."
+ readme = "README.md"
+ requires-python = ">=3.11"
+ authors = [
+   { name = "Security Automation", email = "security@example.com" },
+ ]
+ dependencies = [
+   "fastapi>=0.111.0",
+   "pydantic>=2.7.1",
+   "rich>=13.7.0",
+   "uvicorn>=0.30.0",
+ ]
+
+ [project.optional-dependencies]
+ dev = [
+   "pytest>=8.2.0",
+   "pytest-asyncio>=0.23.6",
+ ]
+
+ [project.urls]
+ repository = "https://example.com/syslog-sizing-tool"
