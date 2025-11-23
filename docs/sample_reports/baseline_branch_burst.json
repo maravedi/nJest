@@ -1,0 +1,68 @@
+{
+  "started_at": "2025-11-23T19:46:53.362101+00:00",
+  "stopped_at": "2025-11-23T19:46:55.418404+00:00",
+  "total_messages": 25,
+  "total_bytes": 3644,
+  "dropped_events": 0,
+  "dropped_ratio": 0.0,
+  "per_severity": {
+    "info": 4,
+    "notice": 3,
+    "debug": 3,
+    "warning": 2,
+    "alert": 2,
+    "critical": 5,
+    "emergency": 3,
+    "error": 3
+  },
+  "per_hostname": {
+    "edge-router-01": 6,
+    "core-switch-02": 3,
+    "ingest-cache-01": 5,
+    "app-gateway-03": 3,
+    "payment-worker-02": 4,
+    "auth-api-01": 4
+  },
+  "per_app_name": {
+    "firewalld": 4,
+    "sshd": 1,
+    "lldpd": 1,
+    "varnish": 5,
+    "snmpd": 1,
+    "dhcpd": 1,
+    "envoy": 3,
+    "scheduler": 4,
+    "uwsgi": 4,
+    "ntpd": 1
+  },
+  "estimates": {
+    "rates": {
+      "avg_events_per_second": 12.16,
+      "avg_bytes_per_second": 1772.11,
+      "projected_events_per_day": 1050428,
+      "projected_gigabytes_per_day": 0.143
+    },
+    "message_size_bytes": {
+      "p50": 146,
+      "p90": 169,
+      "p95": 170,
+      "p99": 172
+    },
+    "talkers": [
+      {
+        "source_ip": "127.0.0.1",
+        "message_count": 25,
+        "bytes_ingested": 3644,
+        "ratio": 1.0,
+        "suggested_action": "Deduplicate or downsample"
+      }
+    ]
+  },
+  "insights": [
+    {
+      "title": "Dominant noise source",
+      "detail": "127.0.0.1 produced 100.0% of traffic. Investigate chatty services or enable sampling.",
+      "confidence": 0.9
+    }
+  ]
+}
