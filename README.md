@@ -2,6 +2,13 @@
 
 Cross-platform asyncio-based utility that ingests live syslog streams, estimates sustained ingest rates, and surfaces talker/noise insights for SIEM capacity planning. The toolkit ships with a CLI, FastAPI service, and structured JSON reporting so it can plug into automation pipelines or on-host diagnostics.
 
+## Build & Test Status
+
+[![Pytest](https://img.shields.io/badge/pytest-14%20passed-brightgreen?style=flat-square&logo=pytest)](tests/)
+[![CI](https://img.shields.io/badge/ci-gh--actions%20pending-lightgrey?style=flat-square&logo=githubactions)](https://docs.github.com/en/actions)
+
+Latest local run: `python3 -m pytest` on 2025-11-23 with Python 3.12.3 (Linux, 14 tests, strict asyncio). Wire the badges to your CI provider (e.g., GitHub Actions `pytest.yml`) once the workflow is published so they track automation results instead of manual updates.
+
 ## Prerequisites
 
 - Python `3.11+` with `pip`/`venv` (Ubuntu 22.04+: `sudo apt install python3.11 python3.11-venv python3-pip`)
