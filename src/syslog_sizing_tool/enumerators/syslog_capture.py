@@ -36,7 +36,10 @@ class SyslogDatagramProtocol(asyncio.DatagramProtocol):
         except QueueFull:
             logger.warning(
                 "ingest_queue_full",
-                extra={"module": "syslog_capture", "function": "datagram_received"},
+                extra={
+                    "module_name": "syslog_capture",
+                    "function_name": "datagram_received",
+                },
             )
             self.state.dropped_events += 1
 
@@ -73,8 +76,8 @@ async def _handle_tcp_client(
                     logger.warning(
                         "ingest_queue_full",
                         extra={
-                            "module": "syslog_capture",
-                            "function": "handle_tcp_client",
+                            "module_name": "syslog_capture",
+                            "function_name": "handle_tcp_client",
                         },
                     )
                     state.dropped_events += 1
@@ -134,8 +137,8 @@ async def run_capture_session(request: Dict[str, Any]) -> Dict[str, Any]:
                 logger.error(
                     "event_parse_failure",
                     extra={
-                        "module": "syslog_capture",
-                        "function": "consumer",
+                        "module_name": "syslog_capture",
+                        "function_name": "consumer",
                         "error": str(exc),
                     },
                 )
