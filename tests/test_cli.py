@@ -21,6 +21,7 @@ def test_parse_args_defaults() -> None:
     assert args.tcp_port == 5614
     assert args.output_format == "console"
     assert args.sample_size_limit == 4096
+    assert args.html_path is None
 
 
 def test_namespace_to_request_strips_cli_only_fields(tmp_path: Path) -> None:
@@ -34,6 +35,8 @@ def test_namespace_to_request_strips_cli_only_fields(tmp_path: Path) -> None:
             "5616",
             "--json-path",
             str(tmp_path / "report.json"),
+            "--html-path",
+            str(tmp_path / "report.html"),
             "--output-format",
             "json",
             "--log-level",
@@ -43,6 +46,7 @@ def test_namespace_to_request_strips_cli_only_fields(tmp_path: Path) -> None:
     payload = cli._namespace_to_request(args)
     assert "output_format" not in payload
     assert "json_path" not in payload
+    assert "html_path" not in payload
     assert "log_level" not in payload
     assert payload["listen_host"] == "127.0.0.1"
     assert payload["udp_port"] == 5515
@@ -50,7 +54,11 @@ def test_namespace_to_request_strips_cli_only_fields(tmp_path: Path) -> None:
 
 
 def _cli_args_from_request(
-    request: Dict[str, Any], *, output: str, json_path: Path | None = None
+    request: Dict[str, Any],
+    *,
+    output: str,
+    json_path: Path | None = None,
+    html_path: Path | None = None,
 ) -> list[str]:
     argv = [
         "--listen-host",
@@ -78,6 +86,8 @@ def _cli_args_from_request(
         argv.extend(["--high-value-keywords", *request["high_value_keywords"]])
     if json_path:
         argv.extend(["--json-path", str(json_path)])
+    if html_path:
+        argv.extend(["--html-path", str(html_path)])
     return argv
 
 
@@ -145,3 +155,35 @@ def test_cli_console_output_from_flog_samples(
 
     assert "Syslog Sizing Summary" in captured.out
     assert "Top Talkers" in captured.out
+
+
+def test_cli_html_output_writes_report(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    base_request: Dict[str, Any] = {
+        "listen_host": "127.0.0.1",
+        "duration_seconds": 2,
+        "flush_interval_seconds": 1,
+        "sample_size_limit": 1024,
+        "high_value_keywords": ["denied", "error", "fail"],
+        "noise_threshold_ratio": 0.7,
+        "max_tcp_clients": 4,
+        "inactivity_grace_seconds": 1,
+    }
+    udp_port, tcp_port = allocate_listen_ports()
+    base_request.update({"udp_port": udp_port, "tcp_port": tcp_port})
+
+    async def flog_runner(request: Dict[str, Any]) -> Dict[str, Any]:
+        request.update({"udp_port": udp_port, "tcp_port": tcp_port, "listen_host": "127.0.0.1"})
+        return await replay_flog_workload(request)
+
+    monkeypatch.setattr(cli, "run_capture_session", flog_runner)
+    html_path = tmp_path / "report.html"
+
+    argv = _cli_args_from_request(base_request, output="html", html_path=html_path)
+    cli.main(argv)
+
+    html_blob = html_path.read_text(encoding="utf-8")
+    assert "<!DOCTYPE html>" in html_blob
+    assert 'id="scale-input"' in html_blob
