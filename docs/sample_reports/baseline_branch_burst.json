@@ -1,6 +1,6 @@
 {
-  "started_at": "2025-11-23T19:46:53.362101+00:00",
-  "stopped_at": "2025-11-23T19:46:55.418404+00:00",
+  "started_at": "2025-11-24T12:43:55.492444+00:00",
+  "stopped_at": "2025-11-24T12:43:57.548874+00:00",
   "total_messages": 25,
   "total_bytes": 3644,
   "dropped_events": 0,
@@ -38,8 +38,8 @@
   "estimates": {
     "rates": {
       "avg_events_per_second": 12.16,
-      "avg_bytes_per_second": 1772.11,
-      "projected_events_per_day": 1050428,
+      "avg_bytes_per_second": 1772.0,
+      "projected_events_per_day": 1050363,
       "projected_gigabytes_per_day": 0.143
     },
     "message_size_bytes": {

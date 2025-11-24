@@ -8,6 +8,7 @@ from typing import Any, Dict
 
 from .enumerators.syslog_capture import run_capture_session
 from .reporting.console import render_console_report
+from .reporting.html import render_html_report
 from .reporting.json import render_json_report
 
 
@@ -57,14 +58,19 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-format",
-        choices=["console", "json"],
+        choices=["console", "json", "html"],
         default="console",
-        help="Console table output or JSON blob.",
+        help="Console table output, JSON blob, or interactive HTML report.",
     )
     parser.add_argument(
         "--json-path",
         type=Path,
         help="Optional file path to persist the JSON output.",
+    )
+    parser.add_argument(
+        "--html-path",
+        type=Path,
+        help="Optional file path to persist the HTML output.",
     )
     parser.add_argument(
         "--max-tcp-clients",
@@ -91,6 +97,7 @@ def _namespace_to_request(namespace: argparse.Namespace) -> Dict[str, Any]:
     payload = vars(namespace).copy()
     payload.pop("output_format")
     payload.pop("json_path")
+    payload.pop("html_path")
     payload.pop("log_level")
     return payload
 
@@ -106,11 +113,18 @@ def main(argv: list[str] | None = None) -> None:
 
     if args.output_format == "console":
         render_console_report(result)
-    else:
+    elif args.output_format == "json":
         json_blob = render_json_report(result)
         print(json_blob)
         if args.json_path:
             args.json_path.write_text(json_blob, encoding="utf-8")
+    else:
+        html_blob = render_html_report(result)
+        if args.html_path:
+            args.html_path.write_text(html_blob, encoding="utf-8")
+            print(f"HTML report saved to {args.html_path}")
+        else:
+            print(html_blob)
 
 
 if __name__ == "__main__":
