@@ -21,6 +21,7 @@ for candidate in (ROOT_DIR, ROOT_DIR / "src"):
 from tests.utils.flog_workload import replay_flog_workload  # noqa: E402  (sys.path adjusted above)
 from syslog_sizing_tool.reporting import console as console_module  # noqa: E402
 from syslog_sizing_tool.reporting.console import render_console_report  # noqa: E402
+from syslog_sizing_tool.reporting.html import render_html_report  # noqa: E402
 from syslog_sizing_tool.types.models import SyslogSizingConfig  # noqa: E402
 from syslog_sizing_tool.utils.accumulator import initialize_state, record_event  # noqa: E402
 from syslog_sizing_tool.utils.analysis import finalize_state  # noqa: E402
@@ -60,6 +61,10 @@ def export_artifacts(scenario: str, result: Dict[str, Any]) -> None:
         render_console_report(result)
         console_text = recorder.export_text(clear=False).strip() + "\n"
     (ARTIFACT_DIR / f"{scenario}.console.txt").write_text(console_text, encoding="utf-8")
+
+    html_title = scenario.replace("_", " ").title()
+    html_blob = render_html_report(result, title=html_title)
+    (ARTIFACT_DIR / f"{scenario}.html").write_text(html_blob, encoding="utf-8")
 
 
 def pump_events(
