@@ -10,6 +10,7 @@ from .enumerators.syslog_capture import run_capture_session
 from .reporting.console import render_console_report
 from .reporting.html import render_html_report
 from .reporting.json import render_json_report
+from .utils.integration_test_runner import run_integration_test
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -90,6 +91,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         help="Logging level for runtime diagnostics.",
     )
+    parser.add_argument(
+        "--integration-test",
+        action="store_true",
+        help="Run an integration test with simulated traffic.",
+    )
     return parser.parse_args(argv)
 
 
@@ -99,6 +105,7 @@ def _namespace_to_request(namespace: argparse.Namespace) -> Dict[str, Any]:
     payload.pop("json_path")
     payload.pop("html_path")
     payload.pop("log_level")
+    payload.pop("integration_test")
     return payload
 
 
@@ -109,7 +116,11 @@ def main(argv: list[str] | None = None) -> None:
         format="%(asctime)s %(levelname)s %(name)s %(message)s",
     )
     request = _namespace_to_request(args)
-    result: Dict[str, Any] = asyncio.run(run_capture_session(request))
+
+    if args.integration_test:
+        result: Dict[str, Any] = asyncio.run(run_integration_test(request))
+    else:
+        result: Dict[str, Any] = asyncio.run(run_capture_session(request))
 
     if args.output_format == "console":
         render_console_report(result)

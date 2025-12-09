@@ -5,7 +5,7 @@ import socket
 from pathlib import Path
 from typing import Any, Iterable, Tuple
 
-from syslog_sizing_tool.enumerators.syslog_capture import (
+from ..enumerators.syslog_capture import (
     run_capture_session as capture_impl,
 )
 
@@ -83,7 +83,11 @@ def build_request(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
     return payload
 
 
-async def replay_flog_workload(request: dict[str, Any] | None = None) -> dict[str, Any]:
+async def run_integration_test(request: dict[str, Any] | None = None) -> dict[str, Any]:
+    """
+    Runs an integration test by starting the capture session and replaying simulated
+    workload against it.
+    """
     payload = build_request(request)
     samples = load_flog_samples()
     midpoint = len(samples) // 2 or len(samples)
