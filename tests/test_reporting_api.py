@@ -8,10 +8,10 @@ from fastapi import HTTPException
 
 from syslog_sizing_tool.reporting import api
 from syslog_sizing_tool.types.models import SyslogSizingConfig
-from tests.utils.flog_workload import (
+from syslog_sizing_tool.utils.integration_test_runner import (
     allocate_listen_ports,
     load_flog_samples,
-    replay_flog_workload,
+    run_integration_test,
 )
 
 
@@ -90,7 +90,7 @@ async def test_start_capture_generates_flog_sample_report(monkeypatch: pytest.Mo
     async def flog_runner(request: Dict[str, Any]) -> Dict[str, Any]:
         request.update({"udp_port": udp_port, "tcp_port": tcp_port, "listen_host": "127.0.0.1"})
         request["duration_seconds"] = 2
-        return await replay_flog_workload(request)
+        return await run_integration_test(request)
 
     monkeypatch.setattr(api, "run_capture_session", flog_runner)
 

@@ -7,10 +7,10 @@ from typing import Any, Dict
 import pytest
 
 from syslog_sizing_tool import cli
-from tests.utils.flog_workload import (
+from syslog_sizing_tool.utils.integration_test_runner import (
     allocate_listen_ports,
     load_flog_samples,
-    replay_flog_workload,
+    run_integration_test,
 )
 
 
@@ -111,7 +111,7 @@ def test_cli_json_output_from_flog_samples(
 
     async def flog_runner(request: Dict[str, Any]) -> Dict[str, Any]:
         request.update({"udp_port": udp_port, "tcp_port": tcp_port, "listen_host": "127.0.0.1"})
-        return await replay_flog_workload(request)
+        return await run_integration_test(request)
 
     monkeypatch.setattr(cli, "run_capture_session", flog_runner)
     report_path = tmp_path / "flog_report.json"
@@ -145,7 +145,7 @@ def test_cli_console_output_from_flog_samples(
 
     async def flog_runner(request: Dict[str, Any]) -> Dict[str, Any]:
         request.update({"udp_port": udp_port, "tcp_port": tcp_port, "listen_host": "127.0.0.1"})
-        return await replay_flog_workload(request)
+        return await run_integration_test(request)
 
     monkeypatch.setattr(cli, "run_capture_session", flog_runner)
 
@@ -176,7 +176,7 @@ def test_cli_html_output_writes_report(
 
     async def flog_runner(request: Dict[str, Any]) -> Dict[str, Any]:
         request.update({"udp_port": udp_port, "tcp_port": tcp_port, "listen_host": "127.0.0.1"})
-        return await replay_flog_workload(request)
+        return await run_integration_test(request)
 
     monkeypatch.setattr(cli, "run_capture_session", flog_runner)
     html_path = tmp_path / "report.html"
