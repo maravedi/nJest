@@ -37,21 +37,26 @@
         "message_count": 560,
         "bytes_ingested": 286720,
         "ratio": 0.7,
-        "suggested_action": "Deduplicate or downsample"
+        "suggested_action": "Deduplicate or downsample",
+        "suggested_patterns": [
+          "^sensor\\s+heartbeat\\s+ok$"
+        ]
       },
       {
         "source_ip": "10.9.8.8",
         "message_count": 120,
         "bytes_ingested": 61440,
         "ratio": 0.15,
-        "suggested_action": "Retain"
+        "suggested_action": "Retain",
+        "suggested_patterns": []
       },
       {
         "source_ip": "10.9.10.5",
         "message_count": 120,
         "bytes_ingested": 245760,
         "ratio": 0.15,
-        "suggested_action": "Retain"
+        "suggested_action": "Retain",
+        "suggested_patterns": []
       }
     ]
   },

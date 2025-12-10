@@ -42,6 +42,8 @@ def record_event(
         state.per_source[source_ip] = talker
     talker.message_count += 1
     talker.total_bytes += size_bytes
+    if len(talker.samples) < 100:
+        talker.samples.append(message)
 
     lowered = message.lower()
     for keyword in config.high_value_keywords:

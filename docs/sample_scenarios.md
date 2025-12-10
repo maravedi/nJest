@@ -27,6 +27,7 @@ Small branch feed captured from the `tests/utils/flog_workload.py` dataset; repr
 - Report artifacts
   - Console: `docs/sample_reports/baseline_branch_burst.console.txt`
   - JSON: `docs/sample_reports/baseline_branch_burst.json`
+  - PDF: `docs/sample_reports/baseline_branch_burst.pdf`
 - Highlights: 12 EPS / 0.14 GB-day projection, all traffic from `127.0.0.1`, automatically flagged as a dominant talker that should be deduplicated.
 
 ### East DC Peak Hour
@@ -51,6 +52,7 @@ High-throughput data center scenario synthesized via `docs/generate_sample_repor
 - Report artifacts
   - Console: `docs/sample_reports/east_dc_peak_hour.console.txt`
   - JSON: `docs/sample_reports/east_dc_peak_hour.json`
+  - PDF: `docs/sample_reports/east_dc_peak_hour.pdf`
 - Highlights: 39.6 MB in 15 seconds (212 GB/day equivalent) with evenly distributed talkers, triggering the “High daily ingest” insight without noise alarms.
 
 ### Noisy Lab Diagnostic
@@ -75,4 +77,5 @@ Lab test bench flooded by sensor heartbeats and limited telemetry signal, used t
 - Report artifacts
   - Console: `docs/sample_reports/noisy_lab_diagnostic.console.txt`
   - JSON: `docs/sample_reports/noisy_lab_diagnostic.json`
-- Highlights: 18% drop rate, 70% of volume from one talker, and zero keyword hits, resulting in “Potential sampling bias”, “Signal-to-noise imbalance”, and “Dominant noise source” insights.
+  - PDF: `docs/sample_reports/noisy_lab_diagnostic.pdf`
+- Highlights: 18% drop rate, 70% of volume from one talker, and zero keyword hits, resulting in “Potential sampling bias”, “Signal-to-noise imbalance”, and “Dominant noise source” insights. The tool also suggests `^sensor\s+heartbeat\s+ok$` as a regex pattern for the dominant talker.

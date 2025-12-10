@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import List
 
+from .pattern_miner import generate_patterns
 from .statistics import percentile_breakdown
 from ..types.models import (
     AggregatedRate,
@@ -48,6 +49,10 @@ def finalize_state(
             if ratio >= config.noise_threshold_ratio
             else "Retain"
         )
+        suggested_patterns = []
+        if ratio >= config.noise_threshold_ratio:
+            suggested_patterns = generate_patterns(stats.samples)
+
         talkers.append(
             TalkerBreakdown(
                 source_ip=source,
@@ -55,6 +60,7 @@ def finalize_state(
                 bytes_ingested=stats.total_bytes,
                 ratio=round(ratio, 4),
                 suggested_action=suggested_action,
+                suggested_patterns=suggested_patterns,
             )
         )
 
