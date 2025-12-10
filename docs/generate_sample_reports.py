@@ -10,6 +10,7 @@ import sys
 from typing import Any, Dict, Iterator
 
 from rich.console import Console
+from weasyprint import HTML
 
 # Ensure repository modules (tests + src) are importable when this script runs from docs/
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -65,6 +66,8 @@ def export_artifacts(scenario: str, result: Dict[str, Any]) -> None:
     html_title = scenario.replace("_", " ").title()
     html_blob = render_html_report(result, title=html_title)
     (ARTIFACT_DIR / f"{scenario}.html").write_text(html_blob, encoding="utf-8")
+
+    HTML(string=html_blob).write_pdf(ARTIFACT_DIR / f"{scenario}.pdf")
 
 
 def pump_events(
