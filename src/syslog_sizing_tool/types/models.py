@@ -90,6 +90,7 @@ class TalkerBreakdown(BaseModel):
     bytes_ingested: int
     ratio: float
     suggested_action: str
+    suggested_patterns: List[str] = Field(default_factory=list)
 
 
 class Insight(BaseModel):
@@ -122,6 +123,7 @@ class SizingResult(BaseModel):
 class TalkerStats:
     message_count: int = 0
     total_bytes: int = 0
+    samples: List[str] = field(default_factory=list)
 
 
 @dataclass(slots=True)

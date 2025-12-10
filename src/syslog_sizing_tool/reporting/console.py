@@ -48,13 +48,17 @@ def render_console_report(result: Dict[str, Any]) -> None:
     talkers_table.add_column("Bytes")
     talkers_table.add_column("Ratio")
     talkers_table.add_column("Action")
+    talkers_table.add_column("Patterns")
     for talker in estimates.get("talkers", []):
+        patterns = talker.get("suggested_patterns", [])
+        pattern_str = "\n".join(patterns) if patterns else ""
         talkers_table.add_row(
             str(talker.get("source_ip")),
             f"{talker.get('message_count', 0):,}",
             f"{talker.get('bytes_ingested', 0):,}",
             f"{talker.get('ratio', 0.0):.2%}",
             str(talker.get("suggested_action")),
+            pattern_str,
         )
 
     insight_table = Table(title="Insights")
