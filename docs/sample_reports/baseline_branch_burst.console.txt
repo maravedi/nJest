@@ -1,7 +1,7 @@
 Syslog Sizing Summary                
 ┌────────────────┬──────────────────────────────────┐
-│ Started        │ 2025-11-24T12:43:55.492444+00:00 │
-│ Stopped        │ 2025-11-24T12:43:57.548874+00:00 │
+│ Started        │ 2025-12-10T00:11:23.473593+00:00 │
+│ Stopped        │ 2025-12-10T00:11:25.544333+00:00 │
 │ Total Messages │ 25                               │
 │ Total Bytes    │ 3,644                            │
 │ Dropped Events │ 0 (0.00%)                        │
@@ -10,10 +10,10 @@ Syslog Sizing Summary
 ┏━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┓
 ┃ Metric            ┃ Value   ┃
 ┡━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━┩
-│ Avg EPS           │ 12.16   │
-│ Avg Bps           │ 1772.0  │
-│ Projected EPS/day │ 1050363 │
-│ Projected GB/day  │ 0.143   │
+│ Avg EPS           │ 12.07   │
+│ Avg Bps           │ 1759.76 │
+│ Projected EPS/day │ 1043105 │
+│ Projected GB/day  │ 0.142   │
 └───────────────────┴─────────┘
   Message Size Bytes  
 ┏━━━━━━━━━━━━┳━━━━━━━┓
@@ -24,17 +24,30 @@ Syslog Sizing Summary
 │ P95        │ 170   │
 │ P99        │ 172   │
 └────────────┴───────┘
-                             Top Talkers                              
-┏━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Source    ┃ Messages ┃ Bytes ┃ Ratio   ┃ Action                    ┃
-┡━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ 127.0.0.1 │ 25       │ 3,644 │ 100.00% │ Deduplicate or downsample │
-└───────────┴──────────┴───────┴─────────┴───────────────────────────┘
-                                    Insights                                    
-┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
-┃ Title                 ┃ Detail                                  ┃ Confidence ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
-│ Dominant noise source │ 127.0.0.1 produced 100.0% of traffic.   │ 90%        │
-│                       │ Investigate chatty services or enable   │            │
-│                       │ sampling.                               │            │
-└───────────────────────┴─────────────────────────────────────────┴────────────┘
+                                                      Top Talkers
+┏━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Source    ┃ Messages ┃ Bytes ┃ Ratio   ┃ Action                    ┃ Patterns                                        ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ 127.0.0.1 │ 25       │ 3,644 │ 100.00% │ Deduplicate or downsample │ ^[meta\s+sequence="<NUM>"\s+category="net"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="http"\]\… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="batch"\]… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="app"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="cache"\]… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="auth"\]\… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="net"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="cache"\]… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="snmp"\]\… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="svc"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="batch"\]… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="cache"\]… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="app"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="svc"\]\s… │
+│           │          │       │         │                           │ ^[meta\s+sequence="<NUM>"\s+category="cache"\]… │
+└───────────┴──────────┴───────┴─────────┴───────────────────────────┴─────────────────────────────────────────────────┘
+                                                        Insights
+┏━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Title                 ┃ Detail                                                                          ┃ Confidence ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ Dominant noise source │ 127.0.0.1 produced 100.0% of traffic. Investigate chatty services or enable     │ 90%        │
+│                       │ sampling.                                                                       │            │
+└───────────────────────┴─────────────────────────────────────────────────────────────────────────────────┴────────────┘
