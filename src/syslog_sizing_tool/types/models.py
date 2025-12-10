@@ -84,13 +84,22 @@ class PercentileBreakdown(BaseModel):
     p99: int = Field(default=0)
 
 
+class SuggestedPattern(BaseModel):
+    pattern: str
+    example: str
+    match_count: int
+    match_percent: float
+    match_eps: float
+    match_mbps: float
+
+
 class TalkerBreakdown(BaseModel):
     source_ip: str
     message_count: int
     bytes_ingested: int
     ratio: float
     suggested_action: str
-    suggested_patterns: List[str] = Field(default_factory=list)
+    suggested_patterns: List[SuggestedPattern] = Field(default_factory=list)
 
 
 class Insight(BaseModel):
