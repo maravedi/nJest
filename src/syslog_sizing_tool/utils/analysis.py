@@ -51,7 +51,12 @@ def finalize_state(
         )
         suggested_patterns = []
         if ratio >= config.noise_threshold_ratio:
-            suggested_patterns = generate_patterns(stats.samples)
+            suggested_patterns = generate_patterns(
+                stats.samples,
+                stats.message_count,
+                stats.total_bytes,
+                measurement_seconds,
+            )
 
         talkers.append(
             TalkerBreakdown(
