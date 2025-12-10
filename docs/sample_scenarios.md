@@ -75,4 +75,4 @@ Lab test bench flooded by sensor heartbeats and limited telemetry signal, used t
 - Report artifacts
   - Console: `docs/sample_reports/noisy_lab_diagnostic.console.txt`
   - JSON: `docs/sample_reports/noisy_lab_diagnostic.json`
-- Highlights: 18% drop rate, 70% of volume from one talker, and zero keyword hits, resulting in “Potential sampling bias”, “Signal-to-noise imbalance”, and “Dominant noise source” insights.
+- Highlights: 18% drop rate, 70% of volume from one talker, and zero keyword hits, resulting in “Potential sampling bias”, “Signal-to-noise imbalance”, and “Dominant noise source” insights. The tool also suggests `^sensor\s+heartbeat\s+ok$` as a regex pattern for the dominant talker.

@@ -179,16 +179,16 @@
   </header>
 
   <section class="summary-grid">
-    <article class="card"><p class="card-label">Capture Window</p><p class="card-value">2025-11-24 12:43:55.492444+00:00 → 2025-11-24 12:43:57.548874+00:00</p></article>
+    <article class="card"><p class="card-label">Capture Window</p><p class="card-value">2025-12-10 00:11:23.473593+00:00 → 2025-12-10 00:11:25.544333+00:00</p></article>
 <article class="card"><p class="card-label">Total Messages</p><p class="card-value">25</p></article>
 <article class="card"><p class="card-label">Total Bytes</p><p class="card-value">3,644  B</p></article>
 <article class="card"><p class="card-label">Dropped Events</p><p class="card-value">0</p><p class="card-sub">Ratio 0.00%</p></article>
 <article class="card"><p class="card-label">Observed Talkers</p><p class="card-value">1</p></article>
   </section>
 
-  <section class="panel"><h2>Estimated Rates</h2><table><tbody><tr><td>Avg events/sec</td><td>12.16</td></tr><tr><td>Avg bytes/sec</td><td>1,772.00</td></tr><tr><td>Projected events/day</td><td>1,050,363</td></tr><tr><td>Projected GB/day</td><td>0.143</td></tr></tbody></table></section>
+  <section class="panel"><h2>Estimated Rates</h2><table><tbody><tr><td>Avg events/sec</td><td>12.07</td></tr><tr><td>Avg bytes/sec</td><td>1,759.76</td></tr><tr><td>Projected events/day</td><td>1,043,105</td></tr><tr><td>Projected GB/day</td><td>0.142</td></tr></tbody></table></section>
   <section class="panel"><h2>Message Size Percentiles</h2><table><tbody><tr><td>P50</td><td>146  B</td></tr><tr><td>P90</td><td>169  B</td></tr><tr><td>P95</td><td>170  B</td></tr><tr><td>P99</td><td>172  B</td></tr></tbody></table></section>
-  <section class="panel"><h2>Top Talkers</h2><table><thead><tr><th>Source</th><th>Messages</th><th>Bytes</th><th>Traffic share</th><th>Action</th></tr></thead><tbody><tr><td>127.0.0.1</td><td>25</td><td>3,644</td><td>100.00%</td><td>Deduplicate or downsample</td></tr></tbody></table></section>
+  <section class="panel"><h2>Top Talkers</h2><table><thead><tr><th>Source</th><th>Messages</th><th>Bytes</th><th>Traffic share</th><th>Action</th></tr></thead><tbody><tr><td>127.0.0.1</td><td>25</td><td>3,644</td><td>100.00%</td><td>Deduplicate or downsample</td></tr></tbody></table><h3>Suggested Patterns for Noisy Talkers</h3><table><thead><tr><th>Source</th><th>Patterns</th></tr></thead><tbody><tr><td>127.0.0.1</td><td><ul><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;net&quot;\]\s+denied\s+.*\s+src=&lt;IP&gt;\s+dst=&lt;IP&gt;\s+sport=&lt;NUM&gt;\s+dport=&lt;NUM&gt;\s+.*$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;http&quot;\]\s+.*\s+.*\s+.*$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;batch&quot;\]\s+job\s+.*\s+.*\s+.*$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;app&quot;\]\s+.*\s+.*\s+.*\s+.*$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;cache&quot;\]\s+.*\s+rate=&lt;NUM&gt;\.&lt;NUM&gt;\s+.*$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;auth&quot;\]\s+Failed\s+password\s+for\s+admin\s+from\s+\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+port\s+\d+\s+ssh2$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;net&quot;\]\s+neighbor\s+update\s+port=Ethernet1/&lt;NUM&gt;\s+chassis=&lt;NUM&gt;:&lt;NUM&gt;:3e:7e:&lt;NUM&gt;:&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;cache&quot;\]\s+ban\s+completed\s+matcher=&quot;req\.url\s+\~\s+/beta&quot;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;snmp&quot;\]\s+trap\s+coldStart\s+agent=core\-switch\-&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;svc&quot;\]\s+assigned\s+lease\s+\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+to\s+&lt;NUM&gt;:&lt;NUM&gt;:&lt;NUM&gt;:ff:fe:&lt;NUM&gt;:&lt;NUM&gt;:&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;batch&quot;\]\s+job\s+retry\s+triggered\s+name=ledger\-rollup\s+attempt=&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;cache&quot;\]\s+backend_healthy\s+backend=origin\-b$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;app&quot;\]\s+\d+\s+Internal\s+Server\s+Error\s+path=/v2/login\s+latency_ms=&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;svc&quot;\]\s+synchronized\s+to\s+\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\s+offset_ms=&lt;NUM&gt;\.&lt;NUM&gt;$</code></li><li><code>^\[meta\s+sequence=&quot;&lt;NUM&gt;&quot;\s+category=&quot;cache&quot;\]\s+backend\s+unhealthy\s+backend=origin\-c\s+reason=timeout$</code></li></ul></td></tr></tbody></table></section>
   <section class="panel"><h2>Insights</h2><div class="insight-grid"><article class="insight-card"><h3>Dominant noise source</h3><p>127.0.0.1 produced 100.0% of traffic. Investigate chatty services or enable sampling.</p><span class="badge">Confidence 90.00%</span></article></div></section>
 
   <section class="panel" id="scaling-panel">
@@ -212,23 +212,23 @@
       </article>
       <article class="scaled-card">
         <p class="label">Avg events per second</p>
-        <p class="value" id="scaled-avg-eps">12.16</p>
-        <p class="hint">Baseline 12.16</p>
+        <p class="value" id="scaled-avg-eps">12.07</p>
+        <p class="hint">Baseline 12.07</p>
       </article>
       <article class="scaled-card">
         <p class="label">Avg bytes per second</p>
-        <p class="value" id="scaled-avg-bps">1,772.00</p>
-        <p class="hint">Baseline 1,772.00</p>
+        <p class="value" id="scaled-avg-bps">1,759.76</p>
+        <p class="hint">Baseline 1,759.76</p>
       </article>
       <article class="scaled-card">
         <p class="label">Projected events per day</p>
-        <p class="value" id="scaled-projectedevents">1,050,363</p>
-        <p class="hint">Baseline 1,050,363</p>
+        <p class="value" id="scaled-projectedevents">1,043,105</p>
+        <p class="hint">Baseline 1,043,105</p>
       </article>
       <article class="scaled-card">
         <p class="label">Projected GB per day</p>
-        <p class="value" id="scaled-projectedgb">0.143</p>
-        <p class="hint">Baseline 0.143</p>
+        <p class="value" id="scaled-projectedgb">0.142</p>
+        <p class="hint">Baseline 0.142</p>
       </article>
     </div>
 
@@ -254,7 +254,7 @@
     Generated from Baseline Branch Burst
   </footer>
 
-  <script id="report-data" type="application/json">{"started_at": "2025-11-24 12:43:55.492444+00:00", "stopped_at": "2025-11-24 12:43:57.548874+00:00", "total_messages": 25, "total_bytes": 3644, "dropped_events": 0, "dropped_ratio": 0.0, "per_severity": {"info": 4, "notice": 3, "debug": 3, "warning": 2, "alert": 2, "critical": 5, "emergency": 3, "error": 3}, "per_hostname": {"edge-router-01": 6, "core-switch-02": 3, "ingest-cache-01": 5, "app-gateway-03": 3, "payment-worker-02": 4, "auth-api-01": 4}, "per_app_name": {"firewalld": 4, "sshd": 1, "lldpd": 1, "varnish": 5, "snmpd": 1, "dhcpd": 1, "envoy": 3, "scheduler": 4, "uwsgi": 4, "ntpd": 1}, "estimates": {"rates": {"avg_events_per_second": 12.16, "avg_bytes_per_second": 1772.0, "projected_events_per_day": 1050363, "projected_gigabytes_per_day": 0.143}, "message_size_bytes": {"p50": 146, "p90": 169, "p95": 170, "p99": 172}, "talkers": [{"source_ip": "127.0.0.1", "message_count": 25, "bytes_ingested": 3644, "ratio": 1.0, "suggested_action": "Deduplicate or downsample"}]}, "insights": [{"title": "Dominant noise source", "detail": "127.0.0.1 produced 100.0% of traffic. Investigate chatty services or enable sampling.", "confidence": 0.9}]}</script>
+  <script id="report-data" type="application/json">{"started_at": "2025-12-10 00:11:23.473593+00:00", "stopped_at": "2025-12-10 00:11:25.544333+00:00", "total_messages": 25, "total_bytes": 3644, "dropped_events": 0, "dropped_ratio": 0.0, "per_severity": {"info": 4, "notice": 3, "debug": 3, "warning": 2, "alert": 2, "critical": 5, "emergency": 3, "error": 3}, "per_hostname": {"edge-router-01": 6, "core-switch-02": 3, "ingest-cache-01": 5, "app-gateway-03": 3, "payment-worker-02": 4, "auth-api-01": 4}, "per_app_name": {"firewalld": 4, "sshd": 1, "lldpd": 1, "varnish": 5, "snmpd": 1, "dhcpd": 1, "envoy": 3, "scheduler": 4, "uwsgi": 4, "ntpd": 1}, "estimates": {"rates": {"avg_events_per_second": 12.07, "avg_bytes_per_second": 1759.76, "projected_events_per_day": 1043105, "projected_gigabytes_per_day": 0.142}, "message_size_bytes": {"p50": 146, "p90": 169, "p95": 170, "p99": 172}, "talkers": [{"source_ip": "127.0.0.1", "message_count": 25, "bytes_ingested": 3644, "ratio": 1.0, "suggested_action": "Deduplicate or downsample", "suggested_patterns": ["^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"net\"\\]\\s+denied\\s+.*\\s+src=<IP>\\s+dst=<IP>\\s+sport=<NUM>\\s+dport=<NUM>\\s+.*$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"http\"\\]\\s+.*\\s+.*\\s+.*$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"batch\"\\]\\s+job\\s+.*\\s+.*\\s+.*$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"app\"\\]\\s+.*\\s+.*\\s+.*\\s+.*$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"cache\"\\]\\s+.*\\s+rate=<NUM>\\.<NUM>\\s+.*$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"auth\"\\]\\s+Failed\\s+password\\s+for\\s+admin\\s+from\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+port\\s+\\d+\\s+ssh2$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"net\"\\]\\s+neighbor\\s+update\\s+port=Ethernet1/<NUM>\\s+chassis=<NUM>:<NUM>:3e:7e:<NUM>:<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"cache\"\\]\\s+ban\\s+completed\\s+matcher=\"req\\.url\\s+\\~\\s+/beta\"$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"snmp\"\\]\\s+trap\\s+coldStart\\s+agent=core\\-switch\\-<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"svc\"\\]\\s+assigned\\s+lease\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+to\\s+<NUM>:<NUM>:<NUM>:ff:fe:<NUM>:<NUM>:<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"batch\"\\]\\s+job\\s+retry\\s+triggered\\s+name=ledger\\-rollup\\s+attempt=<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"cache\"\\]\\s+backend_healthy\\s+backend=origin\\-b$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"app\"\\]\\s+\\d+\\s+Internal\\s+Server\\s+Error\\s+path=/v2/login\\s+latency_ms=<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"svc\"\\]\\s+synchronized\\s+to\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+offset_ms=<NUM>\\.<NUM>$", "^\\[meta\\s+sequence=\"<NUM>\"\\s+category=\"cache\"\\]\\s+backend\\s+unhealthy\\s+backend=origin\\-c\\s+reason=timeout$"]}]}, "insights": [{"title": "Dominant noise source", "detail": "127.0.0.1 produced 100.0% of traffic. Investigate chatty services or enable sampling.", "confidence": 0.9}]}</script>
   <script>
     (function () {
       const dataElement = document.getElementById("report-data");

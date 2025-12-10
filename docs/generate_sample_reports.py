@@ -18,13 +18,13 @@ for candidate in (ROOT_DIR, ROOT_DIR / "src"):
     if candidate_str not in sys.path:
         sys.path.insert(0, candidate_str)
 
-from tests.utils.flog_workload import replay_flog_workload  # noqa: E402  (sys.path adjusted above)
 from syslog_sizing_tool.reporting import console as console_module  # noqa: E402
 from syslog_sizing_tool.reporting.console import render_console_report  # noqa: E402
 from syslog_sizing_tool.reporting.html import render_html_report  # noqa: E402
 from syslog_sizing_tool.types.models import SyslogSizingConfig  # noqa: E402
 from syslog_sizing_tool.utils.accumulator import initialize_state, record_event  # noqa: E402
 from syslog_sizing_tool.utils.analysis import finalize_state  # noqa: E402
+from syslog_sizing_tool.utils.integration_test_runner import run_integration_test  # noqa: E402
 
 ARTIFACT_DIR = Path(__file__).resolve().parent / "sample_reports"
 
@@ -93,7 +93,7 @@ def pump_events(
 
 
 async def build_baseline_result() -> Dict[str, Any]:
-    return await replay_flog_workload()
+    return await run_integration_test()
 
 
 def build_peak_result() -> Dict[str, Any]:

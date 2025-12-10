@@ -130,6 +130,23 @@ def _render_talkers_section(result: Dict[str, Any]) -> str:
         f"<tbody>{''.join(rows)}</tbody>"
         "</table>"
     )
+
+    pattern_rows = []
+    for talker in talkers:
+        patterns = talker.get("suggested_patterns", [])
+        if patterns:
+             pattern_list = "".join(f"<li><code>{escape(p)}</code></li>" for p in patterns)
+             pattern_rows.append(
+                f"<tr><td>{escape(talker.get('source_ip', 'n/a'))}</td>"
+                f"<td><ul>{pattern_list}</ul></td></tr>"
+             )
+
+    if pattern_rows:
+        table += (
+            "<h3>Suggested Patterns for Noisy Talkers</h3>"
+            "<table><thead><tr><th>Source</th><th>Patterns</th></tr></thead>"
+            f"<tbody>{''.join(pattern_rows)}</tbody></table>"
+        )
     return f"<section class=\"panel\"><h2>Top Talkers</h2>{table}</section>"
 
 
