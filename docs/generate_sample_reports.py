@@ -67,7 +67,13 @@ def export_artifacts(scenario: str, result: Dict[str, Any]) -> None:
     html_blob = render_html_report(result, title=html_title)
     (ARTIFACT_DIR / f"{scenario}.html").write_text(html_blob, encoding="utf-8")
 
-    HTML(string=html_blob).write_pdf(ARTIFACT_DIR / f"{scenario}.pdf")
+    # For PDF generation, remove the large JSON payload script as it's not needed
+    # for static viewing and can cause "Unable to render code block" errors on GitHub
+    pdf_html = html_blob.replace(
+        f'<script id="report-data" type="application/json">{json.dumps(result, default=str)}</script>',
+        ""
+    )
+    HTML(string=pdf_html).write_pdf(ARTIFACT_DIR / f"{scenario}.pdf")
 
 
 def pump_events(
