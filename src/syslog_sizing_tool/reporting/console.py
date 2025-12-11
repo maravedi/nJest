@@ -51,7 +51,8 @@ def render_console_report(result: Dict[str, Any]) -> None:
     talkers_table.add_column("Patterns")
     for talker in estimates.get("talkers", []):
         patterns = talker.get("suggested_patterns", [])
-        pattern_str = "\n".join(patterns) if patterns else ""
+        # Extract just the regex string for the console summary to avoid clutter
+        pattern_str = "\n".join([p.get("pattern", "") for p in patterns]) if patterns else ""
         talkers_table.add_row(
             str(talker.get("source_ip")),
             f"{talker.get('message_count', 0):,}",

@@ -39,7 +39,14 @@
         "ratio": 0.7,
         "suggested_action": "Deduplicate or downsample",
         "suggested_patterns": [
-          "^sensor\\s+heartbeat\\s+ok$"
+          {
+            "pattern": "^sensor\\s+heartbeat\\s+ok$",
+            "example": "sensor heartbeat ok",
+            "match_count": 560,
+            "match_percent": 1.0,
+            "match_eps": 112.0,
+            "match_mbps": 0.0546875
+          }
         ]
       },
       {

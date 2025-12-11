@@ -135,16 +135,42 @@ def _render_talkers_section(result: Dict[str, Any]) -> str:
     for talker in talkers:
         patterns = talker.get("suggested_patterns", [])
         if patterns:
-             pattern_list = "".join(f"<li><code>{escape(p)}</code></li>" for p in patterns)
+             # pattern is now a dict (from SuggestedPattern model)
+             inner_rows = []
+             for p in patterns:
+                 p_str = p.get("pattern", "")
+                 p_ex = p.get("example", "")
+                 p_count = _format_int(p.get("match_count"))
+                 p_pct = _format_percent(p.get("match_percent"))
+                 p_eps = _format_float(p.get("match_eps"), precision=1)
+                 p_mbps = _format_float(p.get("match_mbps"), precision=3)
+
+                 inner_rows.append(
+                     "<tr>"
+                     f"<td><code>{escape(p_str)}</code><br><small class=\"muted\">Ex: {escape(p_ex)}</small></td>"
+                     f"<td>{p_count}</td>"
+                     f"<td>{p_pct}</td>"
+                     f"<td>{p_eps}</td>"
+                     f"<td>{p_mbps}</td>"
+                     "</tr>"
+                 )
+
+             inner_table = (
+                 "<table class=\"inner-table\">"
+                 "<thead><tr><th>Pattern / Example</th><th>Est. Events</th><th>% Traffic</th><th>Est. EPS</th><th>Est. MB/s</th></tr></thead>"
+                 f"<tbody>{''.join(inner_rows)}</tbody>"
+                 "</table>"
+             )
+
              pattern_rows.append(
-                f"<tr><td>{escape(talker.get('source_ip', 'n/a'))}</td>"
-                f"<td><ul>{pattern_list}</ul></td></tr>"
+                f"<tr><td><strong>{escape(talker.get('source_ip', 'n/a'))}</strong></td>"
+                f"<td>{inner_table}</td></tr>"
              )
 
     if pattern_rows:
         table += (
             "<h3>Suggested Patterns for Noisy Talkers</h3>"
-            "<table><thead><tr><th>Source</th><th>Patterns</th></tr></thead>"
+            "<table><thead><tr><th>Source</th><th>Analysis</th></tr></thead>"
             f"<tbody>{''.join(pattern_rows)}</tbody></table>"
         )
     return f"<section class=\"panel\"><h2>Top Talkers</h2>{table}</section>"
@@ -291,6 +317,38 @@ _HTML_DOCUMENT = """<!DOCTYPE html>
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+    }
+    .inner-table {
+      margin-top: 0;
+      border: none;
+      background: rgba(0,0,0,0.02);
+      border-radius: 8px;
+      table-layout: fixed;
+    }
+    .inner-table th {
+        font-size: 0.75rem;
+        padding: 0.4rem;
+        white-space: nowrap;
+    }
+    .inner-table td {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-all;
+    }
+    .inner-table code {
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    @media print {
+        .inner-table th, .inner-table td {
+            font-size: 0.75rem;
+        }
+        .inner-table code {
+            font-size: 0.7rem;
+        }
     }
     th, td {
       padding: 0.6rem;
