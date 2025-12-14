@@ -122,20 +122,50 @@ Capture jobs run in background tasks so the HTTP request returns immediately whi
 - **JSON logging**: Structured logs (see `utils/logging_helpers.py`) are SIEM-friendly; forward them to your platform for live monitoring.
 - **API concurrency**: Uvicorn workers can be scaled with `--workers N`. The capture itself is single-process; run multiple pods/VMs for horizontal scale.
 
-## Binding to Syslog Ports
+## Binding to low/privileged ports (e.g., 514)
 
-Many environments prefer the canonical syslog ports (`UDP 514`, `TCP/TLS 6514`). Binding below 1024 typically requires elevated privileges:
+Many environments prefer the canonical syslog ports (`UDP 514`, `TCP 514`, `TCP/TLS 6514`).
 
-1. **setcap** (recommended):
-   ```bash
-   sudo setcap 'cap_net_bind_service=+ep' $(command -v python3.11)
-   ```
-   This allows low-port binding without running the entire process as root. Repeat after Python upgrades.
-2. **authbind/systemd socket activation**: Use when capabilities are disallowed. Configure `authbind` or a systemd `.socket` unit that hands off accepted connections to the tool.
-3. **Port conflicts**: Verify availability with `sudo ss -lpn | grep 514`. Stop existing syslog daemons or front them with a load balancer that forwards traffic to your non-privileged listeners.
-4. **SELinux/AppArmor**: Enforce policies permitting the Python binary to bind the desired ports (`semanage port -a -t syslogd_port_t -p udp 5514`, etc.).
+### Linux / macOS
 
-If binding fails you will see `OSError: [Errno 13] Permission denied` or `Errno 98 Address already in use`; adjust as above or change to higher ports.
+Ports below 1024 typically require elevated privileges.
+
+- **Recommended: Linux capabilities (`cap_net_bind_service`)** (bind low ports without running as root):
+
+```bash
+sudo setcap 'cap_net_bind_service=+ep' "$(command -v python3.11)"
+```
+
+Repeat after Python upgrades (the capability is set on the specific Python binary).
+
+- **Alternatives** (when capabilities are disallowed): `authbind` or systemd socket activation (bind/accept as root, hand off to the tool).
+- **Port conflicts**: verify availability with `sudo ss -lpun | grep ':514 '` (UDP) and `sudo ss -lptn | grep ':514 '` (TCP). Stop/relocate existing syslog daemons or forward traffic to a high port (e.g., 5514/5614).
+- **MAC**: run the tool under `sudo` if you can’t use an equivalent capability mechanism.
+
+If binding fails you will typically see `OSError: [Errno 13] Permission denied` (no privileges) or `Errno 98 Address already in use` (already bound).
+
+### Windows
+
+Windows does **not** treat ports \<1024 as “privileged” the way Linux/macOS does, so binding to **514 usually does not require Administrator** *just for the port number*.
+
+Admin privileges are still commonly needed for:
+
+- **Firewall rules** (allow inbound UDP/TCP 514)
+- **Stopping/adjusting another service already bound to 514**
+
+Useful commands (PowerShell):
+
+```powershell
+# Check what's using UDP/TCP 514
+Get-NetUDPEndpoint -LocalPort 514
+Get-NetTCPConnection -LocalPort 514 -State Listen
+
+# Allow inbound syslog to this host (run PowerShell as Administrator)
+New-NetFirewallRule -DisplayName "Syslog Sizing Tool UDP 514" -Direction Inbound -Action Allow -Protocol UDP -LocalPort 514
+New-NetFirewallRule -DisplayName "Syslog Sizing Tool TCP 514" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 514
+```
+
+If binding fails on Windows, it’s most often **port conflicts** (`Address already in use`) or **network policy/firewall** rather than “privileged port” restrictions.
 
 ## Troubleshooting & Verification
 
