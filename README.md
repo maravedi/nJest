@@ -164,4 +164,8 @@ This project relies on third-party open source components. If you redistribute t
 
 To audit exact versions and licenses in your environment, use your standard SBOM/license tooling (for example, `pip-licenses`, `pipdeptree`, or a CI license scanner) and/or inspect each installed package’s metadata and bundled LICENSE/NOTICE files.
 
+## License
+
+This project is licensed under the **MIT License**. See `LICENSE`.
+
 With the above steps you can install, build, configure, and operate the syslog sizing tool confidently across lab and production environments. 

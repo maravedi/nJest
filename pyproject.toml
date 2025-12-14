@@ -8,6 +8,10 @@
  description = "Cross-platform syslog ingest sizing utility with analytics and optimization guidance."
  readme = "README.md"
  requires-python = ">=3.11"
+license = { text = "MIT" }
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+]
  authors = [
    { name = "Security Automation", email = "security@example.com" },
  ]
