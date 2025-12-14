@@ -1,6 +1,6 @@
 # Syslog Sizing Tool
 
-Cross-platform asyncio-based utility that ingests live syslog streams, estimates sustained ingest rates, and surfaces talker/noise insights for SIEM capacity planning. The toolkit ships with a CLI, FastAPI service, and structured JSON reporting so it can plug into automation pipelines or on-host diagnostics.
+Cross-platform asyncio-based utility that ingests live syslog streams, estimates sustained ingest rates, and surfaces talker/noise insights for SIEM capacity planning. The toolkit ships with a CLI, a FastAPI service, and reporting outputs (console, JSON, and an interactive HTML report) so it can plug into automation pipelines or on-host diagnostics.
 
 ## Build & Test Status
 
@@ -52,10 +52,12 @@ All entry points follow a Receive-an-Object/Return-an-Object (RORO) contract int
 | `--sample-size-limit` | `sample_size_limit` | `4096` | Number of message sizes retained; raise for more accurate percentiles at the cost of RAM. |
 | `--high-value-keywords` | `high_value_keywords` | `error fail panic critical` | Tracked for high-value counts; accepts space-separated tokens. |
 | `--noise-threshold-ratio` | `noise_threshold_ratio` | `0.35` | Talkers above this ratio highlighted for tuning. |
+| `--flush-interval-seconds` | `flush_interval_seconds` | `5` | Reserved for future intermediate reporting; does not change final sizing output today. |
 | `--max-tcp-clients` | `max_tcp_clients` | `64` | Drives semaphore controlling `_handle_tcp_client`; increase when expecting many TCP senders. |
 | `--inactivity-grace-seconds` | `inactivity_grace_seconds` | `3` | Idle timeout for TCP clients to prevent descriptor leaks. |
-| `--output-format` | n/a | `console` | Choose `console` (rich tables) or `json`. |
+| `--output-format` | n/a | `console` | Choose `console` (Rich tables), `json`, or `html` (interactive report). |
 | `--json-path` | n/a | unset | Persist JSON to disk for later analysis. |
+| `--html-path` | n/a | unset | Persist HTML to disk for offline sharing/review. |
 | `--log-level` | n/a | `INFO` | Standard library logging level. |
 
 Pydantic validation enforces sane ranges and prevents UDP/TCP port collisions.
@@ -71,7 +73,30 @@ syslog-sizing-tool \
   --output-format console
 ```
 
-During execution the tool binds UDP/TCP listeners, queues payloads (65K bounded queue), and streams real-time stats. When the window ends it prints a Rich summary and optional JSON artifact.
+During execution the tool binds UDP/TCP listeners, queues payloads (65K bounded queue), and streams real-time stats. When the window ends it emits your chosen report format:
+
+- **`console`**: Rich tables (best for terminals)
+- **`json`**: Structured output (best for pipelines and storing artifacts)
+- **`html`**: A self-contained interactive report with a scaling playground (best for sharing)
+
+Example HTML run (write to disk):
+
+```bash
+syslog-sizing-tool --output-format html --html-path report.html
+```
+
+## Filtering recommendations (noise reduction)
+
+The tool’s “noise” guidance is driven by `noise_threshold_ratio`:
+
+- **Talker classification**: any source whose traffic share \( \ge \) `noise_threshold_ratio` is flagged as a likely noise contributor.
+- **Suggested actions**: flagged sources are marked **“Deduplicate or downsample”**; others are **“Retain”**.
+- **Suggested patterns (newer behavior)**: for flagged sources, the tool generates **candidate regex patterns** from sampled messages to help you implement:
+  - **drop/suppress rules** (discard repeated low-value events),
+  - **deduplication rules** (collapse repeats), or
+  - **sampling rules** (keep 1/N after validation).
+
+Pattern generation uses a log-template miner (see third-party disclosure below) with masking for common high-cardinality tokens (IPs, numbers, hex). Treat generated patterns as **starting points**: validate against representative traffic and your SIEM/collector’s regex engine before deploying.
 
 ## Running the FastAPI Service
 
@@ -115,8 +140,28 @@ If binding fails you will see `OSError: [Errno 13] Permission denied` or `Errno 
 ## Troubleshooting & Verification
 
 - `pytest` runs the fast unit suite; integrate with CI to guard regressions.
+- Use `syslog-sizing-tool --integration-test` to generate a quick end-to-end result with simulated traffic (no sockets required).
 - Enable verbose logging via `--log-level DEBUG` for packet-level diagnostics.
 - Use `tcpdump -ni <iface> port 5514` or `socat - UDP-LISTEN:5514,fork` to simulate traffic.
 - When testing remote sources over TLS, terminate TLS with a proxy (stunnel, HAProxy) and forward plaintext syslog to the tool until native TLS is implemented.
+
+## Third-party components and license notices
+
+This project relies on third-party open source components. If you redistribute this tool (source, wheels, containers, appliances), ensure you comply with each dependency’s license terms.
+
+- **Runtime dependencies** (from `pyproject.toml`):
+  - **FastAPI**: API surface for capture control
+  - **Uvicorn**: ASGI server used to run the FastAPI app
+  - **Pydantic**: input validation and model serialization
+  - **Rich**: console report rendering
+  - **Drain3**: template mining used to generate suggested filtering regexes for noisy talkers
+- **Build tooling**:
+  - **Hatchling**: packaging/build backend
+- **Development/testing**:
+  - **pytest**, **pytest-asyncio**
+- **Documentation utilities (optional)**:
+  - `docs/generate_sample_reports.py` uses **WeasyPrint** to render PDF copies of the HTML report (not required for the core CLI/API).
+
+To audit exact versions and licenses in your environment, use your standard SBOM/license tooling (for example, `pip-licenses`, `pipdeptree`, or a CI license scanner) and/or inspect each installed package’s metadata and bundled LICENSE/NOTICE files.
 
 With the above steps you can install, build, configure, and operate the syslog sizing tool confidently across lab and production environments. 
