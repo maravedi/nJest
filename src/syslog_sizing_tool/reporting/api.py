@@ -8,6 +8,9 @@ from fastapi import FastAPI, HTTPException
 
 from ..enumerators.syslog_capture import run_capture_session
 from ..types.models import SyslogSizingConfig
+from ..utils.asyncio_compat import configure_event_loop_policy_for_platform
+
+configure_event_loop_policy_for_platform()
 
 app = FastAPI(title="Syslog Sizing API", version="0.1.0")
 _sessions: Dict[str, Dict[str, Any]] = {}
