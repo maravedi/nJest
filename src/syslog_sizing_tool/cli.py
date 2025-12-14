@@ -10,6 +10,7 @@ from .enumerators.syslog_capture import run_capture_session
 from .reporting.console import render_console_report
 from .reporting.html import render_html_report
 from .reporting.json import render_json_report
+from .utils.asyncio_compat import configure_event_loop_policy_for_platform
 from .utils.integration_test_runner import run_integration_test
 
 
@@ -116,6 +117,9 @@ def main(argv: list[str] | None = None) -> None:
         format="%(asctime)s %(levelname)s %(name)s %(message)s",
     )
     request = _namespace_to_request(args)
+
+    # Must run before asyncio.run() creates an event loop.
+    configure_event_loop_policy_for_platform()
 
     if args.integration_test:
         result: Dict[str, Any] = asyncio.run(run_integration_test(request))
