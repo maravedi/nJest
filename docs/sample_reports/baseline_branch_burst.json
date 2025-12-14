@@ -1,6 +1,6 @@
 {
-  "started_at": "2025-12-10T22:08:02.979719+00:00",
-  "stopped_at": "2025-12-10T22:08:05.044169+00:00",
+  "started_at": "2025-12-14T18:55:14.811927+00:00",
+  "stopped_at": "2025-12-14T18:55:16.868034+00:00",
   "total_messages": 25,
   "total_bytes": 3644,
   "dropped_events": 0,
@@ -37,10 +37,10 @@
   },
   "estimates": {
     "rates": {
-      "avg_events_per_second": 12.11,
-      "avg_bytes_per_second": 1765.12,
-      "projected_events_per_day": 1046283,
-      "projected_gigabytes_per_day": 0.142
+      "avg_events_per_second": 12.16,
+      "avg_bytes_per_second": 1772.28,
+      "projected_events_per_day": 1050528,
+      "projected_gigabytes_per_day": 0.143
     },
     "message_size_bytes": {
       "p50": 146,
@@ -61,120 +61,120 @@
             "example": "[meta sequence=\"1\" category=\"net\"] denied tcp src=10.44.1.15 dst=203.0.113.5 sport=51234 dport=443 proto=tcp",
             "match_count": 4,
             "match_percent": 0.16,
-            "match_eps": 1.9375620625348158,
-            "match_mbps": 0.00026933579085833997
+            "match_eps": 1.9454240465111983,
+            "match_mbps": 0.0002704286661333773
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"http\"\\]\\s+.*\\s+.*\\s+.*$",
             "example": "[meta sequence=\"15\" category=\"http\"] circuit_breaking active_connections=120 limit=200",
             "match_count": 3,
             "match_percent": 0.12,
-            "match_eps": 1.4531715469011117,
-            "match_mbps": 0.000202001843143755
+            "match_eps": 1.4590680348833986,
+            "match_mbps": 0.00020282149960003298
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"batch\"\\]\\s+job\\s+.*\\s+.*\\s+.*$",
             "example": "[meta sequence=\"16\" category=\"batch\"] job delayed name=ledger-rollup delay_ms=980",
             "match_count": 3,
             "match_percent": 0.12,
-            "match_eps": 1.4531715469011117,
-            "match_mbps": 0.000202001843143755
+            "match_eps": 1.4590680348833986,
+            "match_mbps": 0.00020282149960003298
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"app\"\\]\\s+.*\\s+.*\\s+.*\\s+.*$",
             "example": "[meta sequence=\"21\" category=\"app\"] 200 OK path=/v2/login latency_ms=35",
             "match_count": 3,
             "match_percent": 0.12,
-            "match_eps": 1.4531715469011117,
-            "match_mbps": 0.000202001843143755
+            "match_eps": 1.4590680348833986,
+            "match_mbps": 0.00020282149960003298
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"cache\"\\]\\s+.*\\s+rate=\\d+\\.\\d+\\s+.*$",
             "example": "[meta sequence=\"13\" category=\"cache\"] miss rate=0.04 backend=origin-b",
             "match_count": 2,
             "match_percent": 0.08,
-            "match_eps": 0.9687810312674079,
-            "match_mbps": 0.00013466789542916998
+            "match_eps": 0.9727120232555991,
+            "match_mbps": 0.00013521433306668866
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"auth\"\\]\\s+Failed\\s+password\\s+for\\s+admin\\s+from\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+port\\s+\\d+\\s+ssh2$",
             "example": "[meta sequence=\"2\" category=\"auth\"] Failed password for admin from 203.0.113.45 port 53422 ssh2",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"net\"\\]\\s+neighbor\\s+update\\s+port=Ethernet1/\\d+\\s+chassis=\\d+:\\d+:3e:7e:\\d+:\\d+$",
             "example": "[meta sequence=\"3\" category=\"net\"] neighbor update port=Ethernet1/7 chassis=00:16:3e:7e:25:01",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"cache\"\\]\\s+ban\\s+completed\\s+matcher=\"req\\.url\\s+\\~\\s+/beta\"$",
             "example": "[meta sequence=\"14\" category=\"cache\"] ban completed matcher=\"req.url ~ /beta\"",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"snmp\"\\]\\s+trap\\s+coldStart\\s+agent=core\\-switch\\-\\d+$",
             "example": "[meta sequence=\"4\" category=\"snmp\"] trap coldStart agent=core-switch-02",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"svc\"\\]\\s+assigned\\s+lease\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+to\\s+\\d+:\\d+:\\d+:ff:fe:\\d+:\\d+:\\d+$",
             "example": "[meta sequence=\"5\" category=\"svc\"] assigned lease 10.44.8.23 to 00:25:96:ff:fe:12:31:77",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"batch\"\\]\\s+job\\s+retry\\s+triggered\\s+name=ledger\\-rollup\\s+attempt=\\d+$",
             "example": "[meta sequence=\"17\" category=\"batch\"] job retry triggered name=ledger-rollup attempt=2",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"cache\"\\]\\s+backend_healthy\\s+backend=origin\\-b$",
             "example": "[meta sequence=\"19\" category=\"cache\"] backend_healthy backend=origin-b",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"app\"\\]\\s+\\d+\\s+Internal\\s+Server\\s+Error\\s+path=/v2/login\\s+latency_ms=\\d+$",
             "example": "[meta sequence=\"20\" category=\"app\"] 500 Internal Server Error path=/v2/login latency_ms=903",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"svc\"\\]\\s+synchronized\\s+to\\s+\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\s+offset_ms=\\d+\\.\\d+$",
             "example": "[meta sequence=\"11\" category=\"svc\"] synchronized to 169.254.169.123 offset_ms=0.3",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           },
           {
             "pattern": "^\\[meta\\s+sequence=\"\\d+\"\\s+category=\"cache\"\\]\\s+backend\\s+unhealthy\\s+backend=origin\\-c\\s+reason=timeout$",
             "example": "[meta sequence=\"25\" category=\"cache\"] backend unhealthy backend=origin-c reason=timeout",
             "match_count": 1,
             "match_percent": 0.04,
-            "match_eps": 0.48439051563370394,
-            "match_mbps": 6.733394771458499e-05
+            "match_eps": 0.48635601162779957,
+            "match_mbps": 6.760716653334433e-05
           }
         ]
       }

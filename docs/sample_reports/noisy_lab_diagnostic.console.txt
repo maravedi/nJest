@@ -24,22 +24,28 @@ Syslog Sizing Summary
 │ P95        │ 2048  │
 │ P99        │ 2048  │
 └────────────┴───────┘
-                                            Top Talkers
-┏━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Source    ┃ Messages ┃ Bytes   ┃ Ratio  ┃ Action                    ┃ Patterns                  ┃
-┡━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ 10.9.8.7  │ 560      │ 286,720 │ 70.00% │ Deduplicate or downsample │ ^sensor\s+heartbeat\s+ok$ │
-│ 10.9.8.8  │ 120      │ 61,440  │ 15.00% │ Retain                    │                           │
-│ 10.9.10.5 │ 120      │ 245,760 │ 15.00% │ Retain                    │                           │
-└───────────┴──────────┴─────────┴────────┴───────────────────────────┴───────────────────────────┘
-                                                        Insights
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
-┃ Title                     ┃ Detail                                                                      ┃ Confidence ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
-│ Potential sampling bias   │ 180 events (18.37%) were dropped because the ingest queue was saturated;    │ 92%        │
-│                           │ percentile and talker estimates may under-report true volumes.              │            │
-│ Signal-to-noise imbalance │ Only 0.00% of events matched the configured keywords; consider refining     │ 78%        │
-│                           │ collection rules.                                                           │            │
-│ Dominant noise source     │ 10.9.8.7 produced 70.0% of traffic. Investigate chatty services or enable   │ 90%        │
-│                           │ sampling.                                                                   │            │
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────┴────────────┘
+                                  Top Talkers                                   
+┏━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┓
+┃ Source    ┃ Messages ┃ Bytes   ┃ Ratio  ┃ Action          ┃ Patterns         ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━┩
+│ 10.9.8.7  │ 560      │ 286,720 │ 70.00% │ Deduplicate or  │ ^sensor\s+heart… │
+│           │          │         │        │ downsample      │                  │
+│ 10.9.8.8  │ 120      │ 61,440  │ 15.00% │ Retain          │                  │
+│ 10.9.10.5 │ 120      │ 245,760 │ 15.00% │ Retain          │                  │
+└───────────┴──────────┴─────────┴────────┴─────────────────┴──────────────────┘
+                                    Insights                                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Title                     ┃ Detail                              ┃ Confidence ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ Potential sampling bias   │ 180 events (18.37%) were dropped    │ 92%        │
+│                           │ because the ingest queue was        │            │
+│                           │ saturated; percentile and talker    │            │
+│                           │ estimates may under-report true     │            │
+│                           │ volumes.                            │            │
+│ Signal-to-noise imbalance │ Only 0.00% of events matched the    │ 78%        │
+│                           │ configured keywords; consider       │            │
+│                           │ refining collection rules.          │            │
+│ Dominant noise source     │ 10.9.8.7 produced 70.0% of traffic. │ 90%        │
+│                           │ Investigate chatty services or      │            │
+│                           │ enable sampling.                    │            │
+└───────────────────────────┴─────────────────────────────────────┴────────────┘
